@@ -15,13 +15,13 @@ class RomansTransformerShould
   val basicNumber =
     Table(
       ("decimal", "roman"),
-      (1, 'I'),
-      (5, 'V'),
-      (10, 'X'),
-      (50, 'L'),
-      (100, 'C'),
-      (500, 'D'),
-      (1000, 'M')
+      (1, I),
+      (5, V),
+      (10, X),
+      (50, L),
+      (100, C),
+      (500, D),
+      (1000, M)
     )
 
   forAll(basicNumber) { (decimal, roman) =>
@@ -32,9 +32,7 @@ class RomansTransformerShould
     }
   }
 
-  /*
   "Two should be II" in {
     romanTransformer.roman(2) shouldBe "II"
   }
-  */
 }
