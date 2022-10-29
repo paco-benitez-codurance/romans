@@ -4,6 +4,8 @@ trait Roman {
 
 abstract class Basic(character: Char) extends Roman {
     def asString() = String.valueOf(character)
+
+    def +(that: Basic) = Compose(Seq(this, that))
 }
 
 case object I extends Basic('I')

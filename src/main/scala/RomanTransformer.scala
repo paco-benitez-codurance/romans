@@ -23,6 +23,6 @@ trait BasicMapping {
 
 trait SimpleCombination {
   def simple(number: Int): Option[Roman] = Some(
-    Compose(Seq(I, I))
+    I + I
   )
 }
