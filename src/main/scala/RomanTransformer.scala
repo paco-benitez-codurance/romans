@@ -22,7 +22,13 @@ trait BasicMapping {
 }
 
 trait SimpleCombination {
-  def simple(number: Int): Option[Roman] = Some(
-    I + I
-  )
+  def simple(number: Int): Option[Roman] = {
+    if(number % 2 == 0) {
+      Some(I + I)
+    } else if(number % 3 == 0) {
+      Some(I + I + I)
+    } else {
+      None
+    } 
+  }
 }

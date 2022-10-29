@@ -18,4 +18,6 @@ case object M extends Basic('M')
 
 case class Compose(basics: Seq[Basic]) extends Roman {
     def asString() = basics.foldLeft("")(_ + _.asString())
+
+    def +(that: Basic) = Compose(this.basics ++ Seq(that))
 }
