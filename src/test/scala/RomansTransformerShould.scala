@@ -10,6 +10,8 @@ class RomansTransformerShould
     with TableDrivenPropertyChecks
     with should.Matchers {
 
+  val romanTransformer = RomanTransformer()
+
   val basicNumber =
     Table(
       ("decimal", "roman"),
@@ -24,7 +26,7 @@ class RomansTransformerShould
 
   forAll(basicNumber) { (decimal, roman) => {
       s"basic number $decimal should be $roman" in {
-        RomanTransformer.roman(DecimalNumber(decimal)) shouldBe RomanNumber(roman)
+        romanTransformer.roman(DecimalNumber(decimal)) shouldBe RomanNumber(roman)
       }
     }
   }
