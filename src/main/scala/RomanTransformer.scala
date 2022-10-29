@@ -1,7 +1,8 @@
 class RomanTransformer {
- def roman(decimal: DecimalNumber): RomanNumber = {
-   decimal match
-      case decimal: BasicDecimalNumber =>  decimal.toRoman()
-      case _ => ???
- }
+  def roman(number: Int): String = {
+    val decimal = DecimalNumber(number)
+    decimal match
+      case decimal: BasicDecimalNumber => decimal.toRoman().asString()
+      case _                           => ???
+  }
 }

@@ -12,13 +12,13 @@ class BasicDecimalNumber(val number: Int, val romanNumber: RomanNumber)
 
 trait BasicDecimalNumberCollections {
   private val BasicTypes = Seq(
-    BasicDecimalNumber(1, RomanNumber('I')),
-    BasicDecimalNumber(5, RomanNumber('V')),
-    BasicDecimalNumber(10, RomanNumber('X')),
-    BasicDecimalNumber(50, RomanNumber('L')),
-    BasicDecimalNumber(100, RomanNumber('C')),
-    BasicDecimalNumber(500, RomanNumber('D')),
-    BasicDecimalNumber(1000, RomanNumber('M'))
+    BasicDecimalNumber(1, BasicRomanNumber('I')),
+    BasicDecimalNumber(5, BasicRomanNumber('V')),
+    BasicDecimalNumber(10, BasicRomanNumber('X')),
+    BasicDecimalNumber(50, BasicRomanNumber('L')),
+    BasicDecimalNumber(100, BasicRomanNumber('C')),
+    BasicDecimalNumber(500, BasicRomanNumber('D')),
+    BasicDecimalNumber(1000, BasicRomanNumber('M'))
   )
 
   def basic(number: Int): Option[BasicDecimalNumber] = 

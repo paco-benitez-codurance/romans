@@ -24,10 +24,17 @@ class RomansTransformerShould
       (1000, 'M')
     )
 
-  forAll(basicNumber) { (decimal, roman) => {
+  forAll(basicNumber) { (decimal, roman) =>
+    {
       s"basic number $decimal should be $roman" in {
-        romanTransformer.roman(DecimalNumber(decimal)) shouldBe RomanNumber(roman)
+        romanTransformer.roman(decimal) shouldBe String.valueOf(roman)
       }
     }
   }
+
+  /*
+  "Two should be II" in {
+    romanTransformer.roman(2) shouldBe "II"
+  }
+   */
 }
