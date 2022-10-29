@@ -1,7 +1,8 @@
-trait RomanNumber {
-    def asString(): String
-}
+enum Roman:
+    case Basic(character: Char)
+    case Compose(basics: Seq[Basic])
 
-final case class BasicRomanNumber(char: Char) extends RomanNumber {
-    def asString(): String = String.valueOf(char)
-}
+    def asString() = this match
+        case Basic(character) => String.valueOf(character)
+        case _ => ???
+    
