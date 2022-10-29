@@ -1,7 +1,8 @@
 class DecimalNumber(number: Int)
 
 object DecimalNumber extends BasicDecimalNumberCollections {
-  def apply(number: Int): DecimalNumber = basic(number).getOrElse(???)
+  def apply(number: Int): DecimalNumber = 
+    basic(number).getOrElse(???)
 }
 
 class BasicDecimalNumber(val number: Int, val romanNumber: RomanNumber)
@@ -20,6 +21,7 @@ trait BasicDecimalNumberCollections {
     BasicDecimalNumber(1000, RomanNumber('M'))
   )
 
-  def basic(number: Int): Option[BasicDecimalNumber] = BasicTypes.find(_.number == number)
+  def basic(number: Int): Option[BasicDecimalNumber] = 
+    BasicTypes.find(_.number == number)
 
 }
