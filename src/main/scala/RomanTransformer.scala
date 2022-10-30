@@ -22,28 +22,19 @@ trait BasicMapping {
 }
 
 trait SimpleCombination extends BasicMapping {
+
   def simple(number: Int): Option[Roman] = {
-    if (number % 10 == 0 && number / 10 == 2) {
-      return duplicate(10)
-    } else if (number % 10 == 0 && number / 10 == 3) {
-      return triplicate(10)
-    } else if (number % 2 == 0) {
-      return duplicate(1)
-    } else if (number % 3 == 0) {
-      return Some(I + I + I)
-    } else {
-      return None
-    }
+
+    val three = BasicTypes.reverse
+      .find(_._1 * 3 == number)
+      .map((_, rom) => rom + rom + rom)
+
+    val two =
+      BasicTypes.reverse
+      .find(_._1 * 2 == number)
+      .map((_, rom) => rom + rom)
+
+    three orElse two
   }
 
-  def duplicate(base: Int) =
-    for {
-      candidateBasic <- basic(base)
-    } yield candidateBasic + candidateBasic
-
-
-  def triplicate(base: Int) =
-    for {
-      candidateBasic <- basic(base)
-    } yield candidateBasic + candidateBasic + candidateBasic
 }

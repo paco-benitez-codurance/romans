@@ -39,4 +39,10 @@ class RomansTransformerShould
 
   check(20, "XX")
   check(30, "XXX")
+
+  check(200, "CC")
+  check(300, "CCC")
+
+  check(2000, "MM")
+  check(3000, "MMM")
 }
