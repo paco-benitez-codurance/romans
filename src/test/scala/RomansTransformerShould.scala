@@ -24,19 +24,16 @@ class RomansTransformerShould
       (1000, M)
     )
 
-  forAll(basicNumber) { (decimal, roman) =>
-    {
-      s"basic number $decimal should be $roman" in {
-        romanTransformer.roman(decimal) shouldBe String.valueOf(roman)
+  def check(decimal: Int, expected: String) = {
+      s"$decimal should be $expected" in {
+        romanTransformer.roman(decimal) shouldBe expected
       }
-    }
   }
 
-  "Two should be II" in {
-    romanTransformer.roman(2) shouldBe "II"
+  forAll(basicNumber) { (decimal, roman) =>
+      check(decimal, roman.asString())
   }
 
-  "Three should be III" in {
-    romanTransformer.roman(3) shouldBe "III"
-  }
+  check(2, "II")
+  check(3, "III")
 }
