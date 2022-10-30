@@ -36,4 +36,6 @@ class RomansTransformerShould
 
   check(2, "II")
   check(3, "III")
+
+  check(20, "XX")
 }

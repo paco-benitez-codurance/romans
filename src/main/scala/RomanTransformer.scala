@@ -16,19 +16,24 @@ val BasicTypes = Seq(
 )
 
 trait BasicMapping {
-  def basic(number: Int): Option[Roman] =
+  def basic(number: Int): Option[Basic] =
     BasicTypes.toMap
       .get(number)
 }
 
-trait SimpleCombination {
+trait SimpleCombination extends BasicMapping {
   def simple(number: Int): Option[Roman] = {
-    if(number % 2 == 0) {
-      Some(I + I)
-    } else if(number % 3 == 0) {
+    if (number % 2 == 0) {
+      duplicateBasic(number)
+    } else if (number % 3 == 0) {
       Some(I + I + I)
     } else {
       None
-    } 
+    }
   }
+
+  def duplicateBasic(number: Int) =
+    for {
+      candidateBasic <- basic(number / 2)
+    } yield candidateBasic + candidateBasic
 }
