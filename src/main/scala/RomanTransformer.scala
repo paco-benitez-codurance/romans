@@ -23,17 +23,27 @@ trait BasicMapping {
 
 trait SimpleCombination extends BasicMapping {
   def simple(number: Int): Option[Roman] = {
-    if (number % 2 == 0) {
-      duplicateBasic(number)
+    if (number % 10 == 0 && number / 10 == 2) {
+      return duplicate(10)
+    } else if (number % 10 == 0 && number / 10 == 3) {
+      return triplicate(10)
+    } else if (number % 2 == 0) {
+      return duplicate(1)
     } else if (number % 3 == 0) {
-      Some(I + I + I)
+      return Some(I + I + I)
     } else {
-      None
+      return None
     }
   }
 
-  def duplicateBasic(number: Int) =
+  def duplicate(base: Int) =
     for {
-      candidateBasic <- basic(number / 2)
+      candidateBasic <- basic(base)
     } yield candidateBasic + candidateBasic
+
+
+  def triplicate(base: Int) =
+    for {
+      candidateBasic <- basic(base)
+    } yield candidateBasic + candidateBasic + candidateBasic
 }
