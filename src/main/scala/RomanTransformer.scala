@@ -25,16 +25,15 @@ trait SimpleCombination extends BasicMapping {
 
   def simple(number: Int): Option[Roman] = {
 
-    val three = BasicTypes.reverse
-      .find(_._1 * 3 == number)
-      .map((_, rom) => rom + rom + rom)
-
-    val two =
-      BasicTypes.reverse
-      .find(_._1 * 2 == number)
-      .map((_, rom) => rom + rom)
+    val three = findBasicMultipliedBy(3)(number).map(rom => rom + rom + rom)
+    val two = findBasicMultipliedBy(2)(number).map(rom => rom + rom)
 
     three orElse two
   }
+
+  private def findBasicMultipliedBy(mult: Int)(number: Int): Option[Basic] =
+    BasicTypes.reverse
+      .find(_._1 * mult == number)
+      .map(_._2)
 
 }
