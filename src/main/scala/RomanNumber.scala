@@ -16,6 +16,5 @@ case class Roman(basics: Seq[Basic]) {
     def +(that: Roman) = Roman(this.basics ++ that.basics)
 }
 
-object Roman {
-    def apply(basic: Basic): Roman = new Roman(Seq(basic))
-}
+given Conversion[Basic, Roman] with
+  def apply(basic: Basic): Roman = new Roman(Seq(basic))

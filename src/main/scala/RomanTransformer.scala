@@ -17,9 +17,10 @@ val BasicTypes = Seq(
 
 trait BasicMapping {
   def basic(number: Int): Option[Roman] =
-    BasicTypes.toMap
+    for {
+      bsc <- BasicTypes.toMap
       .get(number)
-      .map(basic => Roman(basic))
+    } yield bsc
 }
 
 trait RepeatedBasicMapping extends BasicMapping {
@@ -35,7 +36,7 @@ trait RepeatedBasicMapping extends BasicMapping {
   private def findBasicMultipliedBy(mult: Int)(number: Int): Option[Roman] =
     BasicTypes.reverse
       .find(_._1 * mult == number)
-      .map(bs => Roman(bs._2))
+      .map(_._2)
 
 }
 
