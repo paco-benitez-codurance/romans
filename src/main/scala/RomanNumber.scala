@@ -1,11 +1,5 @@
-trait Roman {
-    def asString(): String
-}
-
-abstract class Basic(character: Char) extends Roman {
+abstract class Basic(character: Char) {
     def asString() = String.valueOf(character)
-
-    def +(that: Basic) = Compose(Seq(this, that))
 }
 
 case object I extends Basic('I')
@@ -16,8 +10,12 @@ case object C extends Basic('C')
 case object D extends Basic('D')
 case object M extends Basic('M')
 
-case class Compose(basics: Seq[Basic]) extends Roman {
+case class Roman(basics: Seq[Basic]) {
     def asString() = basics.foldLeft("")(_ + _.asString())
 
-    def +(that: Basic) = Compose(this.basics ++ Seq(that))
+    def +(that: Roman) = Roman(this.basics ++ that.basics)
+}
+
+object Roman {
+    def apply(basic: Basic): Roman = new Roman(Seq(basic))
 }

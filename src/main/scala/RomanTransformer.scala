@@ -1,6 +1,6 @@
-class RomanTransformer extends BasicMapping with SimpleCombination {
+class RomanTransformer extends BasicMapping with RepeatedBasicMapping with AddOneMinorToRight {
   def roman(number: Int): String = {
-    val res = basic(number) orElse simple(number)
+    val res = basic(number) orElse repeatedBasic(number) orElse addMinorToRigth(number)
     res.map(_.asString()).getOrElse(???)
   }
 }
@@ -16,14 +16,15 @@ val BasicTypes = Seq(
 )
 
 trait BasicMapping {
-  def basic(number: Int): Option[Basic] =
+  def basic(number: Int): Option[Roman] =
     BasicTypes.toMap
       .get(number)
+      .map(basic => Roman(basic))
 }
 
-trait SimpleCombination extends BasicMapping {
+trait RepeatedBasicMapping extends BasicMapping {
 
-  def simple(number: Int): Option[Roman] = {
+  def repeatedBasic(number: Int): Option[Roman] = {
 
     val three = findBasicMultipliedBy(3)(number).map(rom => rom + rom + rom)
     val two = findBasicMultipliedBy(2)(number).map(rom => rom + rom)
@@ -31,9 +32,18 @@ trait SimpleCombination extends BasicMapping {
     three orElse two
   }
 
-  private def findBasicMultipliedBy(mult: Int)(number: Int): Option[Basic] =
+  private def findBasicMultipliedBy(mult: Int)(number: Int): Option[Roman] =
     BasicTypes.reverse
       .find(_._1 * mult == number)
-      .map(_._2)
+      .map(bs => Roman(bs._2))
 
+}
+
+trait AddOneMinorToRight extends RepeatedBasicMapping {
+  def addMinorToRigth(number: Int): Option[Roman] = {
+    for {
+      bas <- basic(5)
+      remaining <- basic(number - 5) orElse repeatedBasic(number - 5)
+    } yield bas + remaining
+  }
 }
