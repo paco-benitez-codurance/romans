@@ -1,7 +1,11 @@
-class RomanTransformer extends BasicMapping with RepeatedBasicMapping with AddOneMinorToRight {
+class RomanTransformer {
   def roman(number: Int): String = {
-    val res = basic(number) orElse repeatedBasic(number) orElse addMinorToRigth(number)
-    res.map(_.asString()).getOrElse(???)
+    val res =
+      new ThreeRoman() combine
+      new TwoRoman() combine
+      new BasicMapping()
+
+    return res.map(number).get.asString()
   }
 }
 
@@ -14,24 +18,30 @@ val BasicTypes = Seq(
   (500, D),
   (1000, M)
 )
+trait MapRoman {
+  def map(number: Int): Option[Roman]
+  def combine(other: MapRoman): MapRoman = MapRoman.combineTwo(this, other)
+}
 
-trait BasicMapping {
-  def basic(number: Int): Option[Roman] =
+object MapRoman {
+  def combineTwo(one: MapRoman, another: MapRoman) = new MapRoman {
+    override def map(number: Int): Option[Roman] =
+      one.map(number) orElse another.map(number)
+  }
+}
+
+class BasicMapping extends MapRoman {
+  override def map(number: Int): Option[Roman] =
     for {
       bsc <- BasicTypes.toMap
-      .get(number)
+        .get(number)
     } yield bsc
 }
 
-trait RepeatedBasicMapping extends BasicMapping {
+class ThreeRoman extends MapRoman {
 
-  def repeatedBasic(number: Int): Option[Roman] = {
-
-    val three = findBasicMultipliedBy(3)(number).map(rom => rom + rom + rom)
-    val two = findBasicMultipliedBy(2)(number).map(rom => rom + rom)
-
-    three orElse two
-  }
+  override def map(number: Int): Option[Roman] =
+    findBasicMultipliedBy(3)(number).map(rom => rom + rom + rom)
 
   private def findBasicMultipliedBy(mult: Int)(number: Int): Option[Roman] =
     BasicTypes.reverse
@@ -40,11 +50,29 @@ trait RepeatedBasicMapping extends BasicMapping {
 
 }
 
-trait AddOneMinorToRight extends RepeatedBasicMapping {
-  def addMinorToRigth(number: Int): Option[Roman] = {
+class TwoRoman extends MapRoman {
+
+  override def map(number: Int): Option[Roman] =
+    findBasicMultipliedBy(2)(number).map(rom => rom + rom)
+
+  private def findBasicMultipliedBy(mult: Int)(number: Int): Option[Roman] =
+    BasicTypes.reverse
+      .find(_._1 * mult == number)
+      .map(_._2)
+
+}
+
+/*
+class AddOneMinorToRight extends MapRoman {
+  val basic = new BasicMapping()
+  val two = new TwoRoman()
+  val three = new ThreeRoman()
+  override def map(number: Int): Option[Roman] = {
     for {
-      bas <- basic(5)
-      remaining <- basic(number - 5) orElse repeatedBasic(number - 5)
+      bas <- basic.map(5)
+      remaining <- basic.map(number - 5) orElse three.map(number - 5) orElse two
+        .map(number - 5)
     } yield bas + remaining
   }
 }
+*/
