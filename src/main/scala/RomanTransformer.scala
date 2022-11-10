@@ -1,9 +1,9 @@
 class RomanTransformer {
   def roman(number: Int): String = {
     val res =
-      new ThreeRoman() combine
+      new BasicMapping() combine
       new TwoRoman() combine
-      new BasicMapping()
+      new ThreeRoman()
 
     return res.map(number).get.asString()
   }
