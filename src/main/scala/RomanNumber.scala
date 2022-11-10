@@ -1,3 +1,5 @@
+import cats._
+
 abstract class Basic(character: Char) {
     def asString() = String.valueOf(character)
 }
@@ -12,9 +14,12 @@ case object M extends Basic('M')
 
 case class Roman(basics: Seq[Basic]) {
     def asString() = basics.foldLeft("")(_ + _.asString())
-
-    def +(that: Roman) = Roman(this.basics ++ that.basics)
 }
 
 given Conversion[Basic, Roman] with
   def apply(basic: Basic): Roman = new Roman(Seq(basic))
+
+
+given romanSemiGroup: Semigroup[Roman] with {
+    def combine(x: Roman, y: Roman): Roman = Roman(x.basics ++ y.basics) 
+}

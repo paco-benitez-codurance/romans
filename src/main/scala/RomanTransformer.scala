@@ -1,11 +1,20 @@
-class RomanTransformer {
-  def roman(number: Int): String = {
-    val res =
-      new BasicMapping() combine
-      new TwoRoman() combine
-      new ThreeRoman()
+import cats._
+import cats.data._
+import cats.implicits._
 
-    return res.map(number).get.asString()
+
+class RomanTransformer {
+
+  def roman(number: Int): String = {
+
+    val basic: MapRoman = BasicMapping()
+    val two: MapRoman = TwoRoman()
+    val three: MapRoman = ThreeRoman()
+
+    val res =
+      basic |+| two |+| three
+
+    return res.roman(number).get.asString()
   }
 }
 
@@ -19,47 +28,36 @@ val BasicTypes = Seq(
   (1000, M)
 )
 trait MapRoman {
-  def map(number: Int): Option[Roman]
-  def combine(other: MapRoman): MapRoman = MapRoman.combineTwo(this, other)
+  def roman(number: Int): Option[Roman]
 }
 
-object MapRoman {
-  def combineTwo(one: MapRoman, another: MapRoman) = new MapRoman {
-    override def map(number: Int): Option[Roman] =
-      one.map(number) orElse another.map(number)
+given semigroupRomans: Semigroup[MapRoman] with {
+  def combine(x: MapRoman, y: MapRoman): MapRoman = new MapRoman {
+    override def roman(number: Int): Option[Roman] =
+      x.roman(number) orElse y.roman(number)
   }
 }
 
+object RomanUtil {
+   def findBasicMultipliedBy(mult: Int)(number: Int): Option[Roman] =
+    BasicTypes.reverse
+      .find(_._1 * mult == number)
+      .map(_._2)
+}
+
 class BasicMapping extends MapRoman {
-  override def map(number: Int): Option[Roman] =
-    for {
-      bsc <- BasicTypes.toMap
-        .get(number)
-    } yield bsc
+  override def roman(number: Int): Option[Roman] =
+    RomanUtil.findBasicMultipliedBy(1)(number)
 }
 
 class ThreeRoman extends MapRoman {
-
-  override def map(number: Int): Option[Roman] =
-    findBasicMultipliedBy(3)(number).map(rom => rom + rom + rom)
-
-  private def findBasicMultipliedBy(mult: Int)(number: Int): Option[Roman] =
-    BasicTypes.reverse
-      .find(_._1 * mult == number)
-      .map(_._2)
-
+  override def roman(number: Int): Option[Roman] =
+    RomanUtil.findBasicMultipliedBy(3)(number).map(rom => rom |+| rom |+| rom)
 }
 
 class TwoRoman extends MapRoman {
-
-  override def map(number: Int): Option[Roman] =
-    findBasicMultipliedBy(2)(number).map(rom => rom + rom)
-
-  private def findBasicMultipliedBy(mult: Int)(number: Int): Option[Roman] =
-    BasicTypes.reverse
-      .find(_._1 * mult == number)
-      .map(_._2)
-
+  override def roman(number: Int): Option[Roman] =
+    RomanUtil.findBasicMultipliedBy(2)(number).map(rom => rom |+| rom)
 }
 
 /*
@@ -75,4 +73,4 @@ class AddOneMinorToRight extends MapRoman {
     } yield bas + remaining
   }
 }
-*/
+ */
