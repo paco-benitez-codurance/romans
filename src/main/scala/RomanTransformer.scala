@@ -44,30 +44,3 @@ object RomanUtil {
       .find(_._1 * mult == number)
       .map(x => Roman(x._2))
 }
-
-class BasicMapping extends MapRoman {
-  override def roman(number: Int): Option[Roman] =
-    RomanUtil.findBasicMultipliedBy(1)(number)
-}
-
-class ThreeRoman extends MapRoman {
-  override def roman(number: Int): Option[Roman] =
-    RomanUtil.findBasicMultipliedBy(3)(number).map(rom => rom |+| rom |+| rom)
-}
-
-class TwoRoman extends MapRoman {
-  override def roman(number: Int): Option[Roman] =
-    RomanUtil.findBasicMultipliedBy(2)(number).map(rom => rom |+| rom)
-}
-
-class AddOneToRight() extends MapRoman {
-  def basic(number: Int): Option[(Int, Basic)] = {
-    BasicTypes.reverse.find(_._1 == number)
-  }
-  override def roman(number: Int): Option[Roman] = {
-    for {
-      base <- basic(number - 1)
-      remaining <- basic(number - base._1)
-    } yield Roman(base._2) |+| Roman(remaining._2)
-  }
-}
