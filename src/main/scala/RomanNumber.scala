@@ -16,9 +16,9 @@ case class Roman(basics: Seq[Basic]) {
     def asString() = basics.foldLeft("")(_ + _.asString())
 }
 
-given Conversion[Basic, Roman] with
-  def apply(basic: Basic): Roman = new Roman(Seq(basic))
-
+object Roman {
+    def apply(basic: Basic): Roman = Roman(Seq(basic))
+}
 
 given romanSemiGroup: Semigroup[Roman] with {
     def combine(x: Roman, y: Roman): Roman = Roman(x.basics ++ y.basics) 

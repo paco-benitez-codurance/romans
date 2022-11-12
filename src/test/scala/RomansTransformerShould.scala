@@ -46,6 +46,7 @@ class RomansTransformerShould
   check(2000, "MM")
   check(3000, "MMM")
 
-  //check(6, "VI")
+  check(6, "VI")
+  check(11, "XI")
   //check(7, "VII")
 }

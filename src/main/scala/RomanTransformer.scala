@@ -2,7 +2,6 @@ import cats._
 import cats.data._
 import cats.implicits._
 
-
 class RomanTransformer {
 
   def roman(number: Int): String = {
@@ -10,15 +9,16 @@ class RomanTransformer {
     val basic: MapRoman = BasicMapping()
     val two: MapRoman = TwoRoman()
     val three: MapRoman = ThreeRoman()
+    val addOneToRight: AddOneToRight = AddOneToRight()
 
     val res =
-      basic |+| two |+| three
+      basic |+| two |+| three |+| addOneToRight
 
     return res.roman(number).get.asString()
   }
 }
 
-val BasicTypes = Seq(
+val BasicTypes: Seq[(Int, Basic)] = Seq(
   (1, I),
   (5, V),
   (10, X),
@@ -39,10 +39,10 @@ given semigroupRomans: Semigroup[MapRoman] with {
 }
 
 object RomanUtil {
-   def findBasicMultipliedBy(mult: Int)(number: Int): Option[Roman] =
+  def findBasicMultipliedBy(mult: Int)(number: Int): Option[Roman] =
     BasicTypes.reverse
       .find(_._1 * mult == number)
-      .map(_._2)
+      .map(x => Roman(x._2))
 }
 
 class BasicMapping extends MapRoman {
@@ -60,17 +60,15 @@ class TwoRoman extends MapRoman {
     RomanUtil.findBasicMultipliedBy(2)(number).map(rom => rom |+| rom)
 }
 
-/*
-class AddOneMinorToRight extends MapRoman {
+class AddOneToRight extends MapRoman {
+  def basic(number: Int): Option[(Int, Basic)] = {
+    BasicTypes.reverse.find(_._1 == number)
+  }
   val basic = new BasicMapping()
-  val two = new TwoRoman()
-  val three = new ThreeRoman()
-  override def map(number: Int): Option[Roman] = {
+  override def roman(number: Int): Option[Roman] = {
     for {
-      bas <- basic.map(5)
-      remaining <- basic.map(number - 5) orElse three.map(number - 5) orElse two
-        .map(number - 5)
-    } yield bas + remaining
+      base <- basic(number - 1)
+      remaining <- basic.roman(number - base._1)
+    } yield Roman(base._2) |+| remaining
   }
 }
- */
