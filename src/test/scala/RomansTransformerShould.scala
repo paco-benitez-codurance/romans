@@ -48,5 +48,5 @@ class RomansTransformerShould
 
   check(6, "VI")
   check(11, "XI")
-  //check(7, "VII")
+
 }

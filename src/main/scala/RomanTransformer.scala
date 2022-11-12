@@ -60,15 +60,14 @@ class TwoRoman extends MapRoman {
     RomanUtil.findBasicMultipliedBy(2)(number).map(rom => rom |+| rom)
 }
 
-class AddOneToRight extends MapRoman {
+class AddOneToRight() extends MapRoman {
   def basic(number: Int): Option[(Int, Basic)] = {
     BasicTypes.reverse.find(_._1 == number)
   }
-  val basic = new BasicMapping()
   override def roman(number: Int): Option[Roman] = {
     for {
       base <- basic(number - 1)
-      remaining <- basic.roman(number - base._1)
-    } yield Roman(base._2) |+| remaining
+      remaining <- basic(number - base._1)
+    } yield Roman(base._2) |+| Roman(remaining._2)
   }
 }
