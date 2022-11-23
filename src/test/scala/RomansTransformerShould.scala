@@ -22,5 +22,7 @@ class RomansTransformerShould
   check(1, "I")
   check(2, "II")
   check(6, "VI")
+  check(7, "VII")
+  check(8, "VIII")
 
 }
