@@ -8,7 +8,7 @@ class TwoRomanShould
     with TableDrivenPropertyChecks
     with should.Matchers {
 
-  val mapping = TwoRoman()
+  val mapping = BasicMapping(2)
 
   def check(decimal: Int, expected: String) = {
       s"$decimal should be $expected" in {

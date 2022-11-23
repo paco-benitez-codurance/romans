@@ -6,9 +6,9 @@ class RomanTransformer {
 
   def roman(number: Int): String = {
 
-    val basic: MapRoman = BasicMapping()
-    val two: MapRoman = TwoRoman()
-    val three: MapRoman = ThreeRoman()
+    val basic: MapRoman = BasicMapping(1)
+    val two: MapRoman = BasicMapping(2)
+    val three: MapRoman = BasicMapping(3)
     val addOneToRight: MapRoman = AddToRight(1)
     val addTwoToRight: MapRoman = AddToRight(2)
     val addThreeToRight: MapRoman = AddToRight(3)
@@ -38,11 +38,4 @@ given semigroupRomans: Semigroup[MapRoman] with {
     override def roman(number: Int): Option[Roman] =
       x.roman(number) orElse y.roman(number)
   }
-}
-
-object RomanUtil {
-  def findBasicMultipliedBy(mult: Int)(number: Int): Option[Roman] =
-    BasicTypes.reverse
-      .find(_._1 * mult == number)
-      .map(x => Roman(x._2))
 }

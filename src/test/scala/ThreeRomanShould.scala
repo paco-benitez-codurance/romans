@@ -8,7 +8,7 @@ class ThreeRomanShould
     with TableDrivenPropertyChecks
     with should.Matchers {
 
-  val mapping = ThreeRoman()
+  val mapping = BasicMapping(3)
 
   def check(decimal: Int, expected: String) = {
       s"$decimal should be $expected" in {
