@@ -7,9 +7,12 @@ class AddOneToRight() extends MapRoman {
     BasicTypes.reverse.find(_._1 == number)
   }
   override def roman(number: Int): Option[Roman] = {
-    for {
-      base <- basic(number - 1)
-      remaining <- basic(number - base._1)
-    } yield Roman(base._2) |+| Roman(remaining._2)
+    val solutions = for {
+      basic <- BasicTypes
+      right <- BasicTypes if(basic._1 > right._1 )
+      if(basic._1 + right._1 == number)
+    } yield Roman(basic._2) |+| Roman(right._2)
+
+    solutions.headOption
   }
 }
