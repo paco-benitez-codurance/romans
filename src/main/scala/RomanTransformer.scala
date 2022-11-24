@@ -12,9 +12,10 @@ class RomanTransformer {
     val addOneToRight: MapRoman = AddToRight(1)
     val addTwoToRight: MapRoman = AddToRight(2)
     val addThreeToRight: MapRoman = AddToRight(3)
+    val addOneToLeft: MapRoman = AddOneToLeft()
 
     val res =
-      basic |+| two |+| three |+| addOneToRight |+| addTwoToRight |+| addThreeToRight
+      basic |+| two |+| three |+| addOneToRight |+| addTwoToRight |+| addThreeToRight |+| addOneToLeft
 
     return res.roman(number).get.asString()
   }
