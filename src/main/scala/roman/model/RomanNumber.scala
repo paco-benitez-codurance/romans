@@ -1,4 +1,4 @@
-package roman
+package roman.model
 
 import cats._
 
@@ -25,3 +25,13 @@ object Roman {
 given romanSemiGroup: Semigroup[Roman] with {
     def combine(x: Roman, y: Roman): Roman = Roman(x.basics ++ y.basics) 
 }
+
+val BasicTypes: Seq[(Int, Basic)] = Seq(
+  (1, I),
+  (5, V),
+  (10, X),
+  (50, L),
+  (100, C),
+  (500, D),
+  (1000, M)
+)

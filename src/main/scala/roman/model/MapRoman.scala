@@ -1,4 +1,4 @@
-package roman
+package roman.model
 
 import cats._
 import cats.data._

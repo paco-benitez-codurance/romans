@@ -5,7 +5,7 @@ import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks
 import matchers._
 
-import roman._
+import roman.model._
 
 class AddOneToLeftShould
     extends AnyFreeSpec

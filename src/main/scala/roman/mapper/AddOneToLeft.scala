@@ -4,8 +4,8 @@ import cats._
 import cats.data._
 import cats.implicits._
 
-import roman._
-import roman.given
+import roman.model._
+import roman.model.given
 
 class AddOneToLeft() extends MapRoman {
   def basic(number: Int): Option[(Int, Basic)] = {

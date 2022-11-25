@@ -8,7 +8,7 @@ import org.scalatest.prop.TableDrivenPropertyChecks
 import matchers._
 
 
-import roman._
+import roman.model._
 
 class BasicMappingShould
     extends AnyFreeSpec

@@ -4,7 +4,8 @@ import cats._
 import cats.data._
 import cats.implicits._
 
-import roman.given
+import roman.model._
+import roman.model.given
 
 trait AllMappers {
 
