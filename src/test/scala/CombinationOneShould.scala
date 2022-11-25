@@ -16,5 +16,7 @@ class CombinationOneShould
   }
 
   check(29, "XXIX")
+  check(24, "XXIV")
+  check(14, "XIV")
 
 }
