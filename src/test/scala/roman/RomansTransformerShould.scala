@@ -1,3 +1,5 @@
+package roman
+
 import org.scalatest.freespec.AnyFreeSpec
 
 import org.scalatest.freespec.AnyFreeSpec
@@ -29,7 +31,7 @@ class RomansTransformerShould
   check(9, "IX")
   check(80, "LXXX")
 
-  //check(29, "XXIX")
+  check(29, "XXIX")
   //check(294, "CCXCIV")
   //check(2019, "MMXIX")
 }

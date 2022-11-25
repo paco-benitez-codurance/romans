@@ -1,14 +1,16 @@
+package roman.mapper
+
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks
 import matchers._
 
-class ThreeRomanShould
+class TwoRomanShould
     extends AnyFreeSpec
     with TableDrivenPropertyChecks
     with should.Matchers {
 
-  val mapping = BasicMapping(3)
+  val mapping = BasicMapping(2)
 
   def check(decimal: Int, expected: String) = {
       s"$decimal should be $expected" in {
@@ -17,9 +19,9 @@ class ThreeRomanShould
   }
 
 
-  check(3, "III")
-  check(30, "XXX")
-  check(300, "CCC")
-  check(3000, "MMM")
+  check(2, "II")
+  check(20, "XX")
+  check(200, "CC")
+  check(2000, "MM")
 
 }

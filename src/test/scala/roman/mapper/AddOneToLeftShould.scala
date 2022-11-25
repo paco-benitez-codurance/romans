@@ -1,22 +1,25 @@
+package roman.mapper
+
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest._
 import org.scalatest.prop.TableDrivenPropertyChecks
 import matchers._
 
-class CombinationOneShould
+import roman._
+
+class AddOneToLeftShould
     extends AnyFreeSpec
     with should.Matchers {
 
-  val mapping = CombinationOne()
+  val mappingOne = AddOneToLeft()
 
-  def check(decimal: Int, expected: String) = {
+  def check(mapping: MapRoman, decimal: Int, expected: String) = {
       s"$decimal should be $expected" in {
         mapping.roman(decimal).map(_.asString()).get shouldBe expected
       }
   }
 
-  check(29, "XXIX")
-  check(24, "XXIV")
-  check(14, "XIV")
+  check(mappingOne, 4, "IV")
+  check(mappingOne, 9, "IX")
 
 }

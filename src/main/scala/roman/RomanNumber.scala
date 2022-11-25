@@ -1,3 +1,5 @@
+package roman
+
 import cats._
 
 abstract class Basic(character: Char) {

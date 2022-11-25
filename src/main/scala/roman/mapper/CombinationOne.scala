@@ -1,6 +1,11 @@
+package roman.mapper
+
 import cats._
 import cats.data._
 import cats.implicits._
+
+import roman._
+import roman.given
 
 class CombinationOne() extends MapRoman {
 
